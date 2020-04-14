@@ -17,5 +17,5 @@ public class User {
     private String surname;
     private String email;
     // Projects id's that we are in
-    private List<String> groupList = new ArrayList<>();
+    private List<String> processIdList = new ArrayList<>();
 }
