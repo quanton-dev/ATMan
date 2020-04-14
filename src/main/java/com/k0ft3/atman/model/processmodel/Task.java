@@ -1,6 +1,10 @@
 package com.k0ft3.atman.model.processmodel;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.k0ft3.atman.model.processmodel.taskmodel.TaskChange;
 
 import lombok.Data;
 
@@ -11,6 +15,6 @@ public class Task {
     private String taskTitle;
     private String tastContent;
     private String importanceFlag;
-    private Date creationDate;
-    private Date lastChangeDate;
+    private String creationDate;
+    private List<TaskChange> changedDates = new ArrayList<>();
 }

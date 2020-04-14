@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Data
 @AllArgsConstructor
 public class UserController {
-    private final UserRepository userRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping()
     public ResponseEntity<URI> addUser(@RequestBody User user) {
