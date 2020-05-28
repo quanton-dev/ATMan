@@ -10,6 +10,7 @@ trim_trailing_whitespace = true
 
 [*.vue]
 quote_type = single
+prettier.semi = false
 
 [*.md]
 trim_trailing_whitespace = false
