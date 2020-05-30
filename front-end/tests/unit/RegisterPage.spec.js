@@ -25,7 +25,7 @@ describe('RegisterPage.vue', () => {
   beforeEach(() => {
     wrapper = mount(RegisterPage, {
       localVue,
-      router,
+      router
     })
     fieldUsername = wrapper.find('#username')
     fieldEmailAddress = wrapper.find('#emailAddress')
