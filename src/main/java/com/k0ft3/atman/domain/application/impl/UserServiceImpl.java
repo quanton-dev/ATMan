@@ -7,7 +7,6 @@ import org.springframework.util.Assert;
 import javax.transaction.Transactional;
 
 import com.k0ft3.atman.domain.application.UserService;
-import com.k0ft3.atman.domain.application.commands.RegistrationCommand;
 import com.k0ft3.atman.domain.common.event.DomainEventPublisher;
 import com.k0ft3.atman.domain.common.mail.MailManager;
 import com.k0ft3.atman.domain.common.mail.MessageVariable;
@@ -16,10 +15,13 @@ import com.k0ft3.atman.domain.model.user.RegistrationManagement;
 import com.k0ft3.atman.domain.model.user.User;
 import com.k0ft3.atman.domain.model.user.UserRepository;
 import com.k0ft3.atman.domain.model.user.events.UserRegisteredEvent;
-
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import javax.transaction.Transactional;
 
 @Service
 @Transactional
@@ -56,16 +58,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(RegistrationCommand command) throws RegistrationException {
+    public User findById(UserId userId) {
+        return userRepository.findById(userId);
+    }
+
+    @Override
+    public void register(RegisterCommand command) throws RegistrationException {
         Assert.notNull(command, "Parameter `command` must not be null");
         User newUser = registrationManagement.register(command.getUsername(), command.getEmailAddress(),
-                command.getPassword());
+                command.getFirstName(), command.getLastName(), command.getPassword());
 
         sendWelcomeMessage(newUser);
-        domainEventPublisher.publish(new UserRegisteredEvent(newUser));
+        domainEventPublisher.publish(new UserRegisteredEvent(newUser, command));
     }
 
     private void sendWelcomeMessage(User user) {
-        mailManager.send(user.getEmailAddress(), "Welcome to ATMan", "welcome.ftl", MessageVariable.from("user", user));
+        mailManager.send(user.getEmailAddress(), "Welcome to TaskAgile", "welcome.ftl",
+                MessageVariable.from("user", user));
     }
 }

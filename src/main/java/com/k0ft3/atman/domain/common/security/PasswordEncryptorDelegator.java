@@ -14,6 +14,6 @@ public class PasswordEncryptorDelegator implements PasswordEncryptor {
 
     @Override
     public String encrypt(String rawPassword) {
-        return rawPassword;
+        return passwordEncoder.encode(rawPassword);
     }
 }
