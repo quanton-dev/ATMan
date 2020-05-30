@@ -3,7 +3,9 @@ package com.k0ft3.atman.domain.application;
 import com.k0ft3.atman.domain.application.commands.RegistrationCommand;
 import com.k0ft3.atman.domain.model.user.RegistrationException;
 
-public interface UserService {
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+public interface UserService extends UserDetailsService {
 
     /**
      * Register a new user with username, email address, and password.

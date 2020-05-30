@@ -1,5 +1,6 @@
 package com.k0ft3.atman.domain.application.impl;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -13,7 +14,12 @@ import com.k0ft3.atman.domain.common.mail.MessageVariable;
 import com.k0ft3.atman.domain.model.user.RegistrationException;
 import com.k0ft3.atman.domain.model.user.RegistrationManagement;
 import com.k0ft3.atman.domain.model.user.User;
+import com.k0ft3.atman.domain.model.user.UserRepository;
 import com.k0ft3.atman.domain.model.user.events.UserRegisteredEvent;
+
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import org.springframework.util.StringUtils;
 
 @Service
 @Transactional
@@ -22,12 +28,31 @@ public class UserServiceImpl implements UserService {
     private RegistrationManagement registrationManagement;
     private DomainEventPublisher domainEventPublisher;
     private MailManager mailManager;
+    private UserRepository userRepository;
 
     public UserServiceImpl(RegistrationManagement registrationManagement, DomainEventPublisher domainEventPublisher,
-            MailManager mailManager) {
+            MailManager mailManager, UserRepository userRepository) {
         this.registrationManagement = registrationManagement;
         this.domainEventPublisher = domainEventPublisher;
         this.mailManager = mailManager;
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if (StringUtils.isEmpty(username)) {
+            throw new UsernameNotFoundException("No user found");
+        }
+        User user;
+        if (username.contains("@")) {
+            user = userRepository.findByEmailAddress(username);
+        } else {
+            user = userRepository.findByUsername(username);
+        }
+        if (user == null) {
+            throw new UsernameNotFoundException("No user found by `" + username + "`");
+        }
+        return new SimpleUser(user);
     }
 
     @Override
