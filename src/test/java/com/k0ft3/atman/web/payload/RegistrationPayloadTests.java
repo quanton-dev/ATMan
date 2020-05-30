@@ -65,7 +65,7 @@ public class RegistrationPayloadTests {
         String usernameTooShort = RandomStringUtils.random(1);
         payload.setUsername(usernameTooShort);
         payload.setPassword("MyPassword");
-        payload.setEmailAddress("sunny@taskagile.com");
+        payload.setEmailAddress("ysf@example.com");
 
         Set<ConstraintViolation<RegistrationPayload>> violations = validator.validate(payload);
         assertEquals(1, violations.size());
@@ -77,7 +77,7 @@ public class RegistrationPayloadTests {
         String usernameTooLong = RandomStringUtils.random(51);
         payload.setUsername(usernameTooLong);
         payload.setPassword("MyPassword");
-        payload.setEmailAddress("sunny@taskagile.com");
+        payload.setEmailAddress("ysf@example.com");
 
         Set<ConstraintViolation<RegistrationPayload>> violations = validator.validate(payload);
         assertEquals(1, violations.size());
@@ -89,7 +89,7 @@ public class RegistrationPayloadTests {
         String passwordTooShort = RandomStringUtils.random(5);
         payload.setPassword(passwordTooShort);
         payload.setUsername("MyUsername");
-        payload.setEmailAddress("sunny@taskagile.com");
+        payload.setEmailAddress("ysf@example.com");
 
         Set<ConstraintViolation<RegistrationPayload>> violations = validator.validate(payload);
         assertEquals(1, violations.size());
@@ -101,7 +101,7 @@ public class RegistrationPayloadTests {
         String passwordTooLong = RandomStringUtils.random(31);
         payload.setPassword(passwordTooLong);
         payload.setUsername("MyUsername");
-        payload.setEmailAddress("sunny@taskagile.com");
+        payload.setEmailAddress("ysf@example.com");
 
         Set<ConstraintViolation<RegistrationPayload>> violations = validator.validate(payload);
         assertEquals(1, violations.size());
