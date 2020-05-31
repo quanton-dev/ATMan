@@ -93,12 +93,8 @@ public class ApplicationProperties {
 
         private String localRootFolder;
 
-        @NotBlank
-        @NotEmpty
         private String tempFolder;
 
-        @NotBlank
-        @NotEmpty
         private String active;
 
         private String s3AccessKey;
@@ -164,8 +160,7 @@ public class ApplicationProperties {
     }
 
     private static class ImageSetting {
-        @NotBlank
-        @NotEmpty
+
         private String commandSearchPath;
 
         public String getCommandSearchPath() {
