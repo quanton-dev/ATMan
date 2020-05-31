@@ -1,5 +1,129 @@
 package com.k0ft3.atman.web.apis;
 
-public class CardApiController {
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.k0ft3.atman.domain.application.CardService;
+import com.k0ft3.atman.domain.application.commands.AddCardAttachmentCommand;
+import com.k0ft3.atman.domain.application.commands.AddCardCommand;
+import com.k0ft3.atman.domain.application.commands.AddCardCommentCommand;
+import com.k0ft3.atman.domain.application.commands.ChangeCardDescriptionCommand;
+import com.k0ft3.atman.domain.application.commands.ChangeCardPositionsCommand;
+import com.k0ft3.atman.domain.application.commands.ChangeCardTitleCommand;
+import com.k0ft3.atman.domain.common.file.FileUrlCreator;
+import com.k0ft3.atman.domain.model.activity.Activity;
+import com.k0ft3.atman.domain.model.attachment.Attachment;
+import com.k0ft3.atman.domain.model.card.Card;
+import com.k0ft3.atman.domain.model.card.CardId;
+import com.k0ft3.atman.web.payload.AddCardCommentPayload;
+import com.k0ft3.atman.web.payload.AddCardPayload;
+import com.k0ft3.atman.web.payload.ChangeCardDescriptionPayload;
+import com.k0ft3.atman.web.payload.ChangeCardPositionsPayload;
+import com.k0ft3.atman.web.payload.ChangeCardTitlePayload;
+import com.k0ft3.atman.web.results.AddCardResult;
+import com.k0ft3.atman.web.results.ApiResult;
+import com.k0ft3.atman.web.results.AttachmentResult;
+import com.k0ft3.atman.web.results.AttachmentResults;
+import com.k0ft3.atman.web.results.CardActivitiesResult;
+import com.k0ft3.atman.web.results.CardResult;
+import com.k0ft3.atman.web.results.CommentActivityResult;
+import com.k0ft3.atman.web.results.Result;
+import com.k0ft3.atman.web.updater.CardUpdater;
+
+import java.util.List;
+
+@Controller
+public class CardApiController extends AbstractBaseController {
+
+    private CardService cardService;
+    private CardUpdater cardUpdater;
+    private FileUrlCreator fileUrlCreator;
+
+    public CardApiController(CardService cardService, CardUpdater cardUpdater, FileUrlCreator fileUrlCreator) {
+        this.cardService = cardService;
+        this.cardUpdater = cardUpdater;
+        this.fileUrlCreator = fileUrlCreator;
+    }
+
+    @PostMapping("/api/cards")
+    public ResponseEntity<ApiResult> addCard(@RequestBody AddCardPayload payload, HttpServletRequest request) {
+        AddCardCommand command = payload.toCommand();
+        addTriggeredBy(command, request);
+
+        Card card = cardService.addCard(command);
+        cardUpdater.onCardAdded(payload.getBoardId(), card);
+        return AddCardResult.build(card);
+    }
+
+    @GetMapping("/api/cards/{cardId}")
+    public ResponseEntity<ApiResult> getCard(@PathVariable long cardId) {
+        Card card = cardService.findById(new CardId(cardId));
+        return CardResult.build(card);
+    }
+
+    @PostMapping("/api/cards/positions")
+    public ResponseEntity<ApiResult> changeCardPositions(@RequestBody ChangeCardPositionsPayload payload,
+            HttpServletRequest request) {
+        ChangeCardPositionsCommand command = payload.toCommand();
+        addTriggeredBy(command, request);
+
+        cardService.changePositions(command);
+        return Result.ok();
+    }
+
+    @PutMapping("/api/cards/{cardId}/title")
+    public ResponseEntity<ApiResult> changeTitle(@PathVariable long cardId, @RequestBody ChangeCardTitlePayload payload,
+            HttpServletRequest request) {
+        ChangeCardTitleCommand command = payload.toCommand(cardId);
+        addTriggeredBy(command, request);
+
+        cardService.changeCardTitle(command);
+        return Result.ok();
+    }
+
+    @PutMapping("/api/cards/{cardId}/description")
+    public ResponseEntity<ApiResult> changeDescription(@PathVariable long cardId,
+            @RequestBody ChangeCardDescriptionPayload payload, HttpServletRequest request) {
+        ChangeCardDescriptionCommand command = payload.toCommand(cardId);
+        addTriggeredBy(command, request);
+
+        cardService.changeCardDescription(command);
+        return Result.ok();
+    }
+
+    @PostMapping("/api/cards/{cardId}/comments")
+    public ResponseEntity<ApiResult> addCardComment(@PathVariable long cardId,
+            @RequestBody AddCardCommentPayload payload, HttpServletRequest request) {
+        AddCardCommentCommand command = payload.toCommand(new CardId(cardId));
+        addTriggeredBy(command, request);
+
+        Activity activity = cardService.addComment(command);
+        return CommentActivityResult.build(activity);
+    }
+
+    @GetMapping("/api/cards/{cardId}/activities")
+    public ResponseEntity<ApiResult> getCardActivities(@PathVariable long cardId) {
+        List<Activity> activities = cardService.findCardActivities(new CardId(cardId));
+        return CardActivitiesResult.build(activities);
+    }
+
+    @PostMapping("/api/cards/{cardId}/attachments")
+    public ResponseEntity<ApiResult> addAttachment(@PathVariable long cardId, @RequestParam("file") MultipartFile file,
+            HttpServletRequest request) {
+        AddCardAttachmentCommand command = new AddCardAttachmentCommand(cardId, file);
+        addTriggeredBy(command, request);
+
+        Attachment attachment = cardService.addAttachment(command);
+        return AttachmentResult.build(attachment, fileUrlCreator);
+    }
+
+    @GetMapping("/api/cards/{cardId}/attachments")
+    public ResponseEntity<ApiResult> getAttachments(@PathVariable long cardId) {
+        List<Attachment> attachments = cardService.getAttachments(new CardId(cardId));
+        return AttachmentResults.build(attachments, fileUrlCreator);
+    }
 }

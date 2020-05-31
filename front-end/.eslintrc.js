@@ -11,7 +11,7 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'space-before-function-paren': ['error', 'never'],
-    'lines-between-class-members': ['never']
+    'lines-between-class-members': ['error', 'never']
   },
   overrides: [
     {

@@ -72,7 +72,7 @@
           {{ user.name }}
         </button>
         <div class="dropdown-menu" aria-labelledby="profileMenu">
-          <button class="dropdown-item" type="button">
+          <button class="dropdown-item" type="button" :disabled="true">
             {{ $t('header.profile') }}
           </button>
           <button class="dropdown-item" type="button" @click="signOut()">
