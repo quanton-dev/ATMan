@@ -4,6 +4,11 @@ import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+
+import com.k0ft3.atman.domain.model.activity.Activity;
+import com.k0ft3.atman.domain.model.activity.ActivityRepository;
+import com.k0ft3.atman.domain.model.card.CardId;
+
 import java.util.List;
 
 @Repository

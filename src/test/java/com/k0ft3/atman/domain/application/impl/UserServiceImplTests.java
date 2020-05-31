@@ -1,26 +1,36 @@
 package com.k0ft3.atman.domain.application.impl;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import com.k0ft3.atman.domain.application.commands.RegistrationCommand;
+import com.k0ft3.atman.domain.application.commands.RegisterCommand;
 import com.k0ft3.atman.domain.common.event.DomainEventPublisher;
 import com.k0ft3.atman.domain.common.mail.MailManager;
 import com.k0ft3.atman.domain.common.mail.MessageVariable;
 import com.k0ft3.atman.domain.model.user.EmailAddressExistsException;
 import com.k0ft3.atman.domain.model.user.RegistrationException;
 import com.k0ft3.atman.domain.model.user.RegistrationManagement;
+import com.k0ft3.atman.domain.model.user.SimpleUser;
 import com.k0ft3.atman.domain.model.user.User;
+import com.k0ft3.atman.domain.model.user.UserId;
+import com.k0ft3.atman.domain.model.user.UserRepository;
 import com.k0ft3.atman.domain.model.user.UsernameExistsException;
 import com.k0ft3.atman.domain.model.user.events.UserRegisteredEvent;
+import com.k0ft3.atman.utils.IpAddress;
 
 public class UserServiceImplTests {
 
     private RegistrationManagement registrationManagementMock;
     private DomainEventPublisher domainEventPublisherMock;
     private MailManager mailManagerMock;
+    private UserRepository userRepositoryMock;
     private UserServiceImpl instance;
 
     @Before
@@ -28,8 +38,78 @@ public class UserServiceImplTests {
         registrationManagementMock = mock(RegistrationManagement.class);
         domainEventPublisherMock = mock(DomainEventPublisher.class);
         mailManagerMock = mock(MailManager.class);
-        instance = new UserServiceImpl(registrationManagementMock, domainEventPublisherMock, mailManagerMock);
+        userRepositoryMock = mock(UserRepository.class);
+        instance = new UserServiceImpl(registrationManagementMock, domainEventPublisherMock, mailManagerMock,
+                userRepositoryMock);
     }
+
+    // -------------------------------------------
+    // Method loadUserByUsername()
+    // -------------------------------------------
+
+    @Test
+    public void loadUserByUsername_emptyUsername_shouldFail() {
+        Exception exception = null;
+        try {
+            instance.loadUserByUsername("");
+        } catch (Exception e) {
+            exception = e;
+        }
+        assertNotNull(exception);
+        assertTrue(exception instanceof UsernameNotFoundException);
+        verify(userRepositoryMock, never()).findByUsername("");
+        verify(userRepositoryMock, never()).findByEmailAddress("");
+    }
+
+    @Test
+    public void loadUserByUsername_notExistUsername_shouldFail() {
+        String notExistUsername = "NotExistUsername";
+        when(userRepositoryMock.findByUsername(notExistUsername)).thenReturn(null);
+        Exception exception = null;
+        try {
+            instance.loadUserByUsername(notExistUsername);
+        } catch (Exception e) {
+            exception = e;
+        }
+        assertNotNull(exception);
+        assertTrue(exception instanceof UsernameNotFoundException);
+        verify(userRepositoryMock).findByUsername(notExistUsername);
+        verify(userRepositoryMock, never()).findByEmailAddress(notExistUsername);
+    }
+
+    @Test
+    public void loadUserByUsername_existUsername_shouldSucceed() throws IllegalAccessException {
+        String existUsername = "ExistUsername";
+        User foundUser = User.create(existUsername, "user@example.com", "Test", "User", "EncryptedPassword!");
+        // Found user from the database should have id. And since no setter of
+        // id is available in User, we have to write the value to it using reflection
+        //
+        // Besides creating an actual instance of User, we can also create a user
+        // mock, like the following.
+        // User mockUser = Mockito.mock(User.class);
+        // when(mockUser.getUsername()).thenReturn(existUsername);
+        // when(mockUser.getPassword()).thenReturn("EncryptedPassword!");
+        // when(mockUser.getId()).thenReturn(1L);
+        FieldUtils.writeField(foundUser, "id", 1L, true);
+        when(userRepositoryMock.findByUsername(existUsername)).thenReturn(foundUser);
+        Exception exception = null;
+        UserDetails userDetails = null;
+        try {
+            userDetails = instance.loadUserByUsername(existUsername);
+        } catch (Exception e) {
+            exception = e;
+        }
+        assertNull(exception);
+        verify(userRepositoryMock).findByUsername(existUsername);
+        verify(userRepositoryMock, never()).findByEmailAddress(existUsername);
+        assertNotNull(userDetails);
+        assertEquals(existUsername, userDetails.getUsername());
+        assertTrue(userDetails instanceof SimpleUser);
+    }
+
+    // -------------------------------------------
+    // Method register()
+    // -------------------------------------------
 
     @Test(expected = IllegalArgumentException.class)
     public void register_nullCommand_shouldFail() throws RegistrationException {
@@ -41,10 +121,12 @@ public class UserServiceImplTests {
         String username = "existing";
         String emailAddress = "sunny@example.com";
         String password = "MyPassword!";
+        String firstName = "Sunny";
+        String lastName = "Hu";
         doThrow(UsernameExistsException.class).when(registrationManagementMock).register(username, emailAddress,
-                password);
+                firstName, lastName, password);
 
-        RegistrationCommand command = new RegistrationCommand(username, emailAddress, password);
+        RegisterCommand command = new RegisterCommand(username, emailAddress, firstName, lastName, password);
         instance.register(command);
     }
 
@@ -53,10 +135,12 @@ public class UserServiceImplTests {
         String username = "sunny";
         String emailAddress = "existing@example.com";
         String password = "MyPassword!";
+        String firstName = "Sunny";
+        String lastName = "Hu";
         doThrow(EmailAddressExistsException.class).when(registrationManagementMock).register(username, emailAddress,
-                password);
+                firstName, lastName, password);
 
-        RegistrationCommand command = new RegistrationCommand(username, emailAddress, password);
+        RegisterCommand command = new RegisterCommand(username, emailAddress, firstName, lastName, password);
         instance.register(command);
     }
 
@@ -65,14 +149,38 @@ public class UserServiceImplTests {
         String username = "sunny";
         String emailAddress = "sunny@example.com";
         String password = "MyPassword!";
-        User newUser = User.create(username, emailAddress, password);
-        when(registrationManagementMock.register(username, emailAddress, password)).thenReturn(newUser);
-        RegistrationCommand command = new RegistrationCommand(username, emailAddress, password);
+        String firstName = "Sunny";
+        String lastName = "Hu";
+        User newUser = mock(User.class);
+        when(newUser.getId()).thenReturn(new UserId(1));
+        when(newUser.getUsername()).thenReturn(username);
+        when(newUser.getEmailAddress()).thenReturn(emailAddress);
+        when(newUser.getPassword()).thenReturn(password);
+        when(newUser.getFirstName()).thenReturn(firstName);
+        when(newUser.getFirstName()).thenReturn(lastName);
+
+        when(registrationManagementMock.register(username, emailAddress, firstName, lastName, password))
+                .thenReturn(newUser);
+
+        IpAddress ipAddress = new IpAddress("127.0.0.1");
+        RegisterCommand command = mock(RegisterCommand.class);
+        when(command.getUsername()).thenReturn(username);
+        when(command.getEmailAddress()).thenReturn(emailAddress);
+        when(command.getFirstName()).thenReturn(firstName);
+        when(command.getLastName()).thenReturn(lastName);
+        when(command.getPassword()).thenReturn(password);
+        when(command.getIpAddress()).thenReturn(ipAddress);
 
         instance.register(command);
 
         verify(mailManagerMock).send(emailAddress, "Welcome to ATMan", "welcome.ftl",
                 MessageVariable.from("user", newUser));
-        verify(domainEventPublisherMock).publish(new UserRegisteredEvent(newUser));
+
+        ArgumentCaptor<UserRegisteredEvent> argumentCaptor = ArgumentCaptor.forClass(UserRegisteredEvent.class);
+        verify(domainEventPublisherMock).publish(argumentCaptor.capture());
+
+        UserRegisteredEvent event = argumentCaptor.getValue();
+        assertEquals(newUser.getId(), event.getUserId());
+        assertEquals(ipAddress, event.getIpAddress());
     }
 }

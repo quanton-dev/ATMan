@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +32,7 @@ public class LocalFileServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (environment.acceptsProfiles("production", "staging")) {
+        if (environment.acceptsProfiles(Profiles.of("production", "staging"))) {
             String activeProfiles = String.join(", ", environment.getActiveProfiles());
             log.warn("Access `{}` in environment `{}`. IP address: `{}` ", request.getPathInfo(), activeProfiles);
         }

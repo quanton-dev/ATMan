@@ -4,6 +4,13 @@ import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+
+import com.k0ft3.atman.domain.model.board.BoardId;
+import com.k0ft3.atman.domain.model.board.BoardMember;
+import com.k0ft3.atman.domain.model.board.BoardMemberRepository;
+import com.k0ft3.atman.domain.model.user.User;
+import com.k0ft3.atman.domain.model.user.UserId;
+
 import java.util.List;
 
 @Repository

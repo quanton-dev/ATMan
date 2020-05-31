@@ -6,6 +6,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+
+import com.k0ft3.atman.domain.model.board.BoardId;
+import com.k0ft3.atman.domain.model.cardlist.CardList;
+import com.k0ft3.atman.domain.model.cardlist.CardListId;
+import com.k0ft3.atman.domain.model.cardlist.CardListPosition;
+import com.k0ft3.atman.domain.model.cardlist.CardListRepository;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;

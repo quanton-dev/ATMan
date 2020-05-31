@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.2.5.RELEASE</version>
     <relativePath />
   </parent>
+
+
   <groupId>com.k0ft3</groupId>
   <artifactId>app</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <name>ATMan</name>
   <description>Task Management Tool</description>
+
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -23,6 +30,7 @@
     <javax.interceptor.version>1.2</javax.interceptor.version>
     <codehaus.version>1.6.0</codehaus.version>
   </properties>
+
 
   <dependencies>
     <dependency>
@@ -149,28 +157,27 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+      </plugin>
+      <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <executable>true</executable>
+        </configuration>
         <executions>
           <execution>
-            <id>pre integration test</id>
             <goals>
-              <goal>start</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>post integration test</id>
-            <goals>
-              <goal>stop</goal>
+              <goal>build-info</goal>
             </goals>
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
-        <version>1.6.0</version>
+        <version>${codehaus.version}</version>
         <executions>
           <execution>
             <id>font-end install</id>
@@ -185,7 +192,6 @@
               </arguments>
             </configuration>
           </execution>
-
           <execution>
             <id>font-end unit test</id>
             <goals>
@@ -214,29 +220,13 @@
               </arguments>
             </configuration>
           </execution>
-          <execution>
-            <id>front-end e2e test</id>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <phase>integration-test</phase>
-            <configuration>
-              <executable>npm</executable>
-              <arguments>
-                <argument>run</argument>
-                <argument>test:e2e</argument>
-              </arguments>
-            </configuration>
-          </execution>
         </executions>
         <configuration>
           <workingDirectory>${basedir}/front-end</workingDirectory>
         </configuration>
       </plugin>
-
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.1.0</version>
         <executions>
           <execution>
             <id>copy front-end template</id>
@@ -256,9 +246,8 @@
               </resources>
             </configuration>
           </execution>
-
           <execution>
-            <id>copy front-end static assets</id>
+            <id>copy front-end assets</id>
             <goals>
               <goal>copy-resources</goal>
             </goals>
@@ -275,11 +264,46 @@
               </resources>
             </configuration>
           </execution>
+          <execution>
+            <id>copy front-end template to target</id>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <phase>prepare-package</phase>
+            <configuration>
+              <outputDirectory>${basedir}/target/classes/templates</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>front-end/dist</directory>
+                  <includes>
+                    <include>index.html</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy front-end assets to target</id>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <phase>prepare-package</phase>
+            <configuration>
+              <outputDirectory>${basedir}/target/classes/static</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>front-end/dist</directory>
+                  <excludes>
+                    <exclude>index.html</exclude>
+                  </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
-        <version>3.1.0</version>
         <configuration>
           <filesets>
             <fileset>
@@ -295,8 +319,8 @@
         </configuration>
       </plugin>
     </plugins>
-
   </build>
+
 
   <profiles>
     <profile>

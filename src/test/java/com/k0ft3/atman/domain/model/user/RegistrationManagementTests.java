@@ -25,40 +25,48 @@ public class RegistrationManagementTests {
     @Test(expected = UsernameExistsException.class)
     public void register_existedUsername_shouldFail() throws RegistrationException {
         String username = "existUsername";
-        String emailAddress = "sunny@example.com";
+        String emailAddress = "sunny@atman.com";
         String password = "MyPassword!";
+        String firstName = "Existing";
+        String lastName = "User";
         // We just return an empty user object to indicate an existing user
         when(repositoryMock.findByUsername(username)).thenReturn(new User());
-        instance.register(username, emailAddress, password);
+        instance.register(username, emailAddress, firstName, lastName, password);
     }
 
     @Test(expected = EmailAddressExistsException.class)
     public void register_existedEmailAddress_shouldFail() throws RegistrationException {
         String username = "sunny";
-        String emailAddress = "exist@example.com";
+        String emailAddress = "exist@atman.com";
         String password = "MyPassword!";
+        String firstName = "Sunny";
+        String lastName = "Hu";
         // We just return an empty user object to indicate an existing user
         when(repositoryMock.findByEmailAddress(emailAddress)).thenReturn(new User());
-        instance.register(username, emailAddress, password);
+        instance.register(username, emailAddress, firstName, lastName, password);
     }
 
     @Test
     public void register_uppercaseEmailAddress_shouldSucceedAndBecomeLowercase() throws RegistrationException {
         String username = "sunny";
-        String emailAddress = "Sunny@example.com";
+        String emailAddress = "Sunny@atman.com";
         String password = "MyPassword!";
-        instance.register(username, emailAddress, password);
-        User userToSave = User.create(username, emailAddress.toLowerCase(), password);
+        String firstName = "Sunny";
+        String lastName = "Hu";
+        instance.register(username, emailAddress, firstName, lastName, password);
+        User userToSave = User.create(username, emailAddress.toLowerCase(), firstName, lastName, password);
         verify(repositoryMock).save(userToSave);
     }
 
     @Test
     public void register_newUser_shouldSucceed() throws RegistrationException {
         String username = "sunny";
-        String emailAddress = "sunny@example.com";
+        String emailAddress = "sunny@atman.com";
         String password = "MyPassword!";
         String encryptedPassword = "EncryptedPassword";
-        User newUser = User.create(username, emailAddress, encryptedPassword);
+        String firstName = "Sunny";
+        String lastName = "Hu";
+        User newUser = User.create(username, emailAddress, firstName, lastName, encryptedPassword);
 
         // Setup repository mock
         // Return null to indicate no user exists
@@ -68,7 +76,7 @@ public class RegistrationManagementTests {
         // Setup passwordEncryptor mock
         when(passwordEncryptorMock.encrypt(password)).thenReturn("EncryptedPassword");
 
-        User savedUser = instance.register(username, emailAddress, password);
+        User savedUser = instance.register(username, emailAddress, firstName, lastName, password);
         InOrder inOrder = inOrder(repositoryMock);
         inOrder.verify(repositoryMock).findByUsername(username);
         inOrder.verify(repositoryMock).findByEmailAddress(emailAddress);

@@ -5,6 +5,12 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+
+import com.k0ft3.atman.domain.model.team.Team;
+import com.k0ft3.atman.domain.model.team.TeamId;
+import com.k0ft3.atman.domain.model.team.TeamRepository;
+import com.k0ft3.atman.domain.model.user.UserId;
+
 import java.util.List;
 
 @Repository

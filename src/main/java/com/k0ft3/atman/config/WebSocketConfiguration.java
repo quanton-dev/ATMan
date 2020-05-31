@@ -1,5 +1,7 @@
 package com.k0ft3.atman.config;
 
+import com.k0ft3.atman.web.socket.WebSocketRequestDispatcher;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;

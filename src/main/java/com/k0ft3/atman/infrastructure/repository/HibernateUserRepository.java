@@ -5,6 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
+import com.k0ft3.atman.domain.model.user.User;
+import com.k0ft3.atman.domain.model.user.UserId;
+import com.k0ft3.atman.domain.model.user.UserRepository;
+
 @Repository
 public class HibernateUserRepository extends HibernateSupport<User> implements UserRepository {
 

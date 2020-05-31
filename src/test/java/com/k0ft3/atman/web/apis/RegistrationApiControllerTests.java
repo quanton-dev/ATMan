@@ -1,11 +1,5 @@
 package com.k0ft3.atman.web.apis;
 
-import com.k0ft3.atman.config.SecurityConfiguration;
-import com.k0ft3.atman.domain.application.UserService;
-import com.k0ft3.atman.domain.model.user.EmailAddressExistsException;
-import com.k0ft3.atman.domain.model.user.UsernameExistsException;
-import com.k0ft3.atman.utils.JsonUtils;
-import com.k0ft3.atman.web.payload.RegistrationPayload;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +17,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.k0ft3.atman.config.SecurityConfiguration;
+import com.k0ft3.atman.domain.application.UserService;
+import com.k0ft3.atman.domain.model.user.EmailAddressExistsException;
+import com.k0ft3.atman.domain.model.user.UsernameExistsException;
+import com.k0ft3.atman.utils.JsonUtils;
+import com.k0ft3.atman.web.payload.RegistrationPayload;
+
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = { SecurityConfiguration.class, RegistrationApiController.class })
 @WebMvcTest
+@ActiveProfiles("test")
 public class RegistrationApiControllerTests {
 
     @Autowired
@@ -43,8 +45,10 @@ public class RegistrationApiControllerTests {
     public void register_existedUsername_shouldFailAndReturn400() throws Exception {
         RegistrationPayload payload = new RegistrationPayload();
         payload.setUsername("exist");
-        payload.setEmailAddress("test@example.com");
+        payload.setEmailAddress("test@atman.com");
         payload.setPassword("MyPassword!");
+        payload.setFirstName("User");
+        payload.setLastName("Test");
 
         doThrow(UsernameExistsException.class).when(serviceMock).register(payload.toCommand());
 
@@ -57,8 +61,10 @@ public class RegistrationApiControllerTests {
     public void register_existedEmailAddress_shouldFailAndReturn400() throws Exception {
         RegistrationPayload payload = new RegistrationPayload();
         payload.setUsername("test");
-        payload.setEmailAddress("exist@example.com");
+        payload.setEmailAddress("exist@atman.com");
         payload.setPassword("MyPassword!");
+        payload.setFirstName("User");
+        payload.setLastName("Test");
 
         doThrow(EmailAddressExistsException.class).when(serviceMock).register(payload.toCommand());
 
@@ -70,9 +76,11 @@ public class RegistrationApiControllerTests {
     @Test
     public void register_validPayload_shouldSucceedAndReturn201() throws Exception {
         RegistrationPayload payload = new RegistrationPayload();
-        payload.setUsername("sunny");
-        payload.setEmailAddress("sunny@examplef.com");
+        payload.setUsername("yusuf");
+        payload.setEmailAddress("yusuf@atman.com");
         payload.setPassword("MyPassword!");
+        payload.setFirstName("User");
+        payload.setLastName("Test");
 
         doNothing().when(serviceMock).register(payload.toCommand());
 
