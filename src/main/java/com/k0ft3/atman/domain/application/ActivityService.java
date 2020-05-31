@@ -1,5 +1,7 @@
 package com.k0ft3.atman.domain.application;
 
+import com.k0ft3.atman.domain.model.activity.Activity;
+
 public interface ActivityService {
 
     /**

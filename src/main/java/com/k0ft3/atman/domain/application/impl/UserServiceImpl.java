@@ -7,21 +7,21 @@ import org.springframework.util.Assert;
 import javax.transaction.Transactional;
 
 import com.k0ft3.atman.domain.application.UserService;
+import com.k0ft3.atman.domain.application.commands.RegisterCommand;
 import com.k0ft3.atman.domain.common.event.DomainEventPublisher;
 import com.k0ft3.atman.domain.common.mail.MailManager;
 import com.k0ft3.atman.domain.common.mail.MessageVariable;
 import com.k0ft3.atman.domain.model.user.RegistrationException;
 import com.k0ft3.atman.domain.model.user.RegistrationManagement;
+import com.k0ft3.atman.domain.model.user.SimpleUser;
 import com.k0ft3.atman.domain.model.user.User;
+import com.k0ft3.atman.domain.model.user.UserId;
 import com.k0ft3.atman.domain.model.user.UserRepository;
 import com.k0ft3.atman.domain.model.user.events.UserRegisteredEvent;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
-import javax.transaction.Transactional;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import org.springframework.util.StringUtils;
 
 @Service
 @Transactional

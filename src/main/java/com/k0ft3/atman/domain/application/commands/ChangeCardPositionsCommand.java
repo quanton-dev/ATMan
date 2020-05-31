@@ -2,6 +2,9 @@ package com.k0ft3.atman.domain.application.commands;
 
 import java.util.List;
 
+import com.k0ft3.atman.domain.model.board.BoardId;
+import com.k0ft3.atman.domain.model.card.CardPosition;
+
 public class ChangeCardPositionsCommand extends UserCommand {
 
     private BoardId boardId;

@@ -12,6 +12,8 @@ import org.springframework.util.Assert;
 import java.io.IOException;
 import java.util.List;
 
+import com.k0ft3.atman.utils.Size;
+
 @Component
 public class ImageProcessor {
 

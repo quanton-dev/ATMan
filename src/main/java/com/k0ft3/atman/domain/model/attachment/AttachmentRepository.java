@@ -2,6 +2,8 @@ package com.k0ft3.atman.domain.model.attachment;
 
 import java.util.List;
 
+import com.k0ft3.atman.domain.model.card.CardId;
+
 public interface AttachmentRepository {
 
     /**

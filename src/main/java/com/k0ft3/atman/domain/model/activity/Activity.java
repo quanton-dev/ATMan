@@ -3,6 +3,13 @@ package com.k0ft3.atman.domain.model.activity;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+
+import com.k0ft3.atman.domain.common.model.AbstractBaseEntity;
+import com.k0ft3.atman.domain.model.board.BoardId;
+import com.k0ft3.atman.domain.model.card.CardId;
+import com.k0ft3.atman.domain.model.user.UserId;
+import com.k0ft3.atman.utils.IpAddress;
+
 import java.util.Date;
 import java.util.Objects;
 

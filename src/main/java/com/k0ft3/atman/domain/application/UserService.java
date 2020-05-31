@@ -1,6 +1,10 @@
 package com.k0ft3.atman.domain.application;
 
+import com.k0ft3.atman.domain.application.commands.RegisterCommand;
 import com.k0ft3.atman.domain.model.user.RegistrationException;
+import com.k0ft3.atman.domain.model.user.User;
+import com.k0ft3.atman.domain.model.user.UserId;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {

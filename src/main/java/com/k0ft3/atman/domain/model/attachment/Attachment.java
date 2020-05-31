@@ -3,6 +3,11 @@ package com.k0ft3.atman.domain.model.attachment;
 import org.apache.commons.io.FilenameUtils;
 
 import javax.persistence.*;
+
+import com.k0ft3.atman.domain.common.model.AbstractBaseEntity;
+import com.k0ft3.atman.domain.model.card.CardId;
+import com.k0ft3.atman.domain.model.user.UserId;
+
 import java.util.Date;
 import java.util.Objects;
 

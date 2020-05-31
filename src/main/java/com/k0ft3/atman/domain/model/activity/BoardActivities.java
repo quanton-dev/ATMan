@@ -1,5 +1,8 @@
 package com.k0ft3.atman.domain.model.activity;
 
+import com.k0ft3.atman.domain.model.board.events.BoardCreatedEvent;
+import com.k0ft3.atman.domain.model.board.events.BoardMemberAddedEvent;
+
 public class BoardActivities {
 
     public static Activity from(BoardCreatedEvent event) {

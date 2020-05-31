@@ -2,6 +2,14 @@ package com.k0ft3.atman.domain.application;
 
 import java.util.List;
 
+import com.k0ft3.atman.domain.application.commands.AddBoardMemberCommand;
+import com.k0ft3.atman.domain.application.commands.CreateBoardCommand;
+import com.k0ft3.atman.domain.model.board.Board;
+import com.k0ft3.atman.domain.model.board.BoardId;
+import com.k0ft3.atman.domain.model.user.User;
+import com.k0ft3.atman.domain.model.user.UserId;
+import com.k0ft3.atman.domain.model.user.UserNotFoundException;
+
 public interface BoardService {
 
     /**

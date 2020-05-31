@@ -5,11 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
-import com.k0ft3.atman.domain.model.user.User;
-import com.k0ft3.atman.domain.model.user.UserRepository;
-
 @Repository
-public class HibernateUserRepository extends HibernateSupport implements UserRepository {
+public class HibernateUserRepository extends HibernateSupport<User> implements UserRepository {
 
     public HibernateUserRepository(EntityManager entityManager) {
         super(entityManager);
@@ -30,8 +27,9 @@ public class HibernateUserRepository extends HibernateSupport implements UserRep
     }
 
     @Override
-    public void save(User user) {
-        entityManager.persist(user);
-        entityManager.flush();
+    public User findById(UserId userId) {
+        Query<User> query = getSession().createQuery("from User where id = :id", User.class);
+        query.setParameter("id", userId.value());
+        return query.uniqueResult();
     }
 }

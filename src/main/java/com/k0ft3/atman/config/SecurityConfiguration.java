@@ -1,6 +1,9 @@
 package com.k0ft3.atman.config;
 
-import com.k0ft3.atman.web.apis.authentication.SimpleAuthenticationSuccessHandler;
+import com.k0ft3.atman.domain.common.security.ApiRequestAccessDeniedExceptionTranslationFilter;
+import com.k0ft3.atman.web.apis.authenticate.AuthenticationFilter;
+import com.k0ft3.atman.web.apis.authenticate.SimpleAuthenticationSuccessHandler;
+
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

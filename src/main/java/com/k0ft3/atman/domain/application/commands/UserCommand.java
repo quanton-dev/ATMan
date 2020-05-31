@@ -4,6 +4,10 @@ import io.jsonwebtoken.lang.Assert;
 
 import java.util.Objects;
 
+import com.k0ft3.atman.domain.common.event.TriggeredBy;
+import com.k0ft3.atman.domain.model.user.UserId;
+import com.k0ft3.atman.utils.IpAddress;
+
 public abstract class UserCommand implements TriggeredBy {
 
     private UserId userId;

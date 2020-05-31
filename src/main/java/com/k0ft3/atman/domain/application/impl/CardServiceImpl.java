@@ -4,6 +4,32 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.transaction.Transactional;
+
+import com.k0ft3.atman.domain.application.CardService;
+import com.k0ft3.atman.domain.application.commands.AddCardAttachmentCommand;
+import com.k0ft3.atman.domain.application.commands.AddCardCommand;
+import com.k0ft3.atman.domain.application.commands.AddCardCommentCommand;
+import com.k0ft3.atman.domain.application.commands.ChangeCardDescriptionCommand;
+import com.k0ft3.atman.domain.application.commands.ChangeCardPositionsCommand;
+import com.k0ft3.atman.domain.application.commands.ChangeCardTitleCommand;
+import com.k0ft3.atman.domain.common.event.DomainEventPublisher;
+import com.k0ft3.atman.domain.model.activity.Activity;
+import com.k0ft3.atman.domain.model.activity.ActivityRepository;
+import com.k0ft3.atman.domain.model.activity.CardActivities;
+import com.k0ft3.atman.domain.model.attachment.Attachment;
+import com.k0ft3.atman.domain.model.attachment.AttachmentManagement;
+import com.k0ft3.atman.domain.model.attachment.AttachmentRepository;
+import com.k0ft3.atman.domain.model.attachment.events.CardAttachmentAddedEvent;
+import com.k0ft3.atman.domain.model.board.BoardId;
+import com.k0ft3.atman.domain.model.card.Card;
+import com.k0ft3.atman.domain.model.card.CardId;
+import com.k0ft3.atman.domain.model.card.CardRepository;
+import com.k0ft3.atman.domain.model.card.events.CardAddedEvent;
+import com.k0ft3.atman.domain.model.card.events.CardDescriptionChangedEvent;
+import com.k0ft3.atman.domain.model.card.events.CardTitleChangedEvent;
+import com.k0ft3.atman.domain.model.cardlist.CardList;
+import com.k0ft3.atman.domain.model.cardlist.CardListRepository;
+
 import java.util.List;
 
 @Service

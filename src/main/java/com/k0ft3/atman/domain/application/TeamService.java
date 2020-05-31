@@ -2,6 +2,11 @@ package com.k0ft3.atman.domain.application;
 
 import java.util.List;
 
+import com.k0ft3.atman.domain.application.commands.CreateTeamCommand;
+import com.k0ft3.atman.domain.model.team.Team;
+import com.k0ft3.atman.domain.model.team.TeamId;
+import com.k0ft3.atman.domain.model.user.UserId;
+
 public interface TeamService {
 
     /**

@@ -1,5 +1,7 @@
 package com.k0ft3.atman.domain.application.commands;
 
+import com.k0ft3.atman.domain.model.cardlist.CardListId;
+
 public class AddCardCommand extends UserCommand {
 
     private CardListId cardListId;

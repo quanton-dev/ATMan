@@ -12,6 +12,11 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.k0ft3.atman.domain.common.file.FileStorage;
+import com.k0ft3.atman.domain.common.file.TempFile;
+import com.k0ft3.atman.utils.ImageUtils;
+import com.k0ft3.atman.utils.Size;
+
 @Component
 public class ThumbnailCreator {
 

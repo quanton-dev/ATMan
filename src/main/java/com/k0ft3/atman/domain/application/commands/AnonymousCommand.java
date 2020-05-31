@@ -4,6 +4,9 @@ import io.jsonwebtoken.lang.Assert;
 
 import java.util.Objects;
 
+import com.k0ft3.atman.domain.common.event.TriggeredFrom;
+import com.k0ft3.atman.utils.IpAddress;
+
 /**
  * A command triggered by not authenticated user
  */

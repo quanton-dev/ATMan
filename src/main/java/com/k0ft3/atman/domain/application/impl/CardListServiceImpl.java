@@ -3,6 +3,16 @@ package com.k0ft3.atman.domain.application.impl;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import com.k0ft3.atman.domain.application.CardListService;
+import com.k0ft3.atman.domain.application.commands.AddCardListCommand;
+import com.k0ft3.atman.domain.application.commands.ChangeCardListPositionsCommand;
+import com.k0ft3.atman.domain.common.event.DomainEventPublisher;
+import com.k0ft3.atman.domain.model.board.BoardId;
+import com.k0ft3.atman.domain.model.cardlist.CardList;
+import com.k0ft3.atman.domain.model.cardlist.CardListRepository;
+import com.k0ft3.atman.domain.model.cardlist.events.CardListAddedEvent;
+
 import java.util.List;
 
 @Service

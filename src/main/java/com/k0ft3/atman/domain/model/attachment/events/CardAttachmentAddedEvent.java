@@ -1,5 +1,11 @@
 package com.k0ft3.atman.domain.model.attachment.events;
 
+import com.k0ft3.atman.domain.common.event.TriggeredBy;
+import com.k0ft3.atman.domain.model.attachment.Attachment;
+import com.k0ft3.atman.domain.model.attachment.AttachmentId;
+import com.k0ft3.atman.domain.model.card.Card;
+import com.k0ft3.atman.domain.model.card.events.CardDomainEvent;
+
 public class CardAttachmentAddedEvent extends CardDomainEvent {
 
     private static final long serialVersionUID = -7962885726212050836L;

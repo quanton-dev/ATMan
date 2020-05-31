@@ -1,5 +1,7 @@
 package com.k0ft3.atman.domain.application.commands;
 
+import com.k0ft3.atman.domain.model.card.CardId;
+
 public class ChangeCardTitleCommand extends UserCommand {
 
     private CardId cardId;

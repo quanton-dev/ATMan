@@ -1,26 +1,29 @@
-package com.k0ft3.atman.web.apis.authentication;
+package com.k0ft3.atman.web.apis.authenticate;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.k0ft3.atman.utils.JsonUtils;
-
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.k0ft3.atman.utils.JsonUtils;
+
+import java.io.IOException;
 
 public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    protected AuthenticationFilter() {
-        super(new AntPathRequestMatcher("/api/authentications", "POST"));
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationFilter.class);
 
+    public AuthenticationFilter() {
+        super(new AntPathRequestMatcher("/api/authentications", "POST"));
     }
 
     @Override
@@ -40,4 +43,28 @@ public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter
         return this.getAuthenticationManager().authenticate(token);
     }
 
+    static class LoginRequest {
+        private String username;
+        private String password;
+
+        public boolean isInvalid() {
+            return StringUtils.isBlank(username) || StringUtils.isBlank(password);
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+    }
 }

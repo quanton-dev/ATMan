@@ -7,6 +7,9 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.k0ft3.atman.domain.model.user.SimpleUser;
+
 import java.io.IOException;
 
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {

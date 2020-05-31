@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 
+import com.k0ft3.atman.domain.model.user.UserId;
+
 @Component
 public class TokenManager {
 

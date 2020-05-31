@@ -1,4 +1,4 @@
-package com.k0ft3.atman.web.apis.authentication;
+package com.k0ft3.atman.web.apis.authenticate;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;

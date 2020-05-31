@@ -1,5 +1,8 @@
 package com.k0ft3.atman.domain.common.event;
 
+import com.k0ft3.atman.domain.model.user.UserId;
+import com.k0ft3.atman.utils.IpAddress;
+
 public interface TriggeredBy {
 
     /**
@@ -15,4 +18,4 @@ public interface TriggeredBy {
      * @return an IP address
      */
     IpAddress getIpAddress();
-}©2020 GitHu
+}

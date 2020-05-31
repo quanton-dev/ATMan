@@ -8,6 +8,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import com.k0ft3.atman.domain.common.file.FileStorage;
+import com.k0ft3.atman.domain.common.file.FileStorageResolver;
+import com.k0ft3.atman.domain.common.file.TempFile;
+import com.k0ft3.atman.domain.model.card.CardId;
+import com.k0ft3.atman.domain.model.user.UserId;
+import com.k0ft3.atman.utils.ImageUtils;
+
 @Component
 public class AttachmentManagement {
 

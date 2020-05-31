@@ -2,6 +2,18 @@ package com.k0ft3.atman.domain.application;
 
 import java.util.List;
 
+import com.k0ft3.atman.domain.application.commands.AddCardAttachmentCommand;
+import com.k0ft3.atman.domain.application.commands.AddCardCommand;
+import com.k0ft3.atman.domain.application.commands.AddCardCommentCommand;
+import com.k0ft3.atman.domain.application.commands.ChangeCardDescriptionCommand;
+import com.k0ft3.atman.domain.application.commands.ChangeCardPositionsCommand;
+import com.k0ft3.atman.domain.application.commands.ChangeCardTitleCommand;
+import com.k0ft3.atman.domain.model.activity.Activity;
+import com.k0ft3.atman.domain.model.attachment.Attachment;
+import com.k0ft3.atman.domain.model.board.BoardId;
+import com.k0ft3.atman.domain.model.card.Card;
+import com.k0ft3.atman.domain.model.card.CardId;
+
 public interface CardService {
 
     /**

@@ -3,6 +3,9 @@ package com.k0ft3.atman.domain.common.event;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.k0ft3.atman.domain.model.user.UserId;
+import com.k0ft3.atman.utils.IpAddress;
+
 /**
  * Domain event. It is about who did what at what time.
  */

@@ -1,5 +1,7 @@
 package com.k0ft3.atman.domain.model.activity;
 
+import com.k0ft3.atman.domain.model.cardlist.events.CardListAddedEvent;
+
 public class CardListActivities {
 
     public static Activity from(CardListAddedEvent event) {
