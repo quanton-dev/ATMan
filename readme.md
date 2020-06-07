@@ -16,6 +16,11 @@ Advanced task management tool built with Vue.js 2, Spring Boot 2, and MySQL 5.7+
 - Create database `atman`
 - Initialize database with scripts in `setup` folder
 
+### RabbitMQ setup on docker
+
+- Init code `docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management`
+
+
 ### Add dev properties file
 
 - Create `src/main/resources/application-dev.properties` with the following settings to override the settings in `application.properties`.

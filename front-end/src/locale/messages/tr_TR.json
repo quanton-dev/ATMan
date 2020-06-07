@@ -1,0 +1,97 @@
+{
+  "logo": {
+    "tagLine": "Gelişmiş görev yöneticisi"
+  },
+  "header": {
+    "boardsMenu": {
+      "label": "Panolar",
+      "noBoard": "Pano Yok",
+      "personalBoards": "Kişisel Panolar"
+    },
+    "search": "Ara",
+    "profile": "Profil",
+    "signOut": "Çıkış Yap"
+  },
+  "loginPage": {
+    "form": {
+      "username": {
+        "label": "Kullanıcı Adı veya E-posta adresi",
+        "required": "Kullanıcı Adı veya E-posta adresi gerekli"
+      },
+      "password": {
+        "label": "Parola",
+        "required": "Parola gerekli"
+      },
+      "submit": "Giriş Yap",
+      "noAccountYet": "Henüz bir hesabınız yok mu?",
+      "signUpHere": "Buradan kaydolun",
+      "forgotPassword": "Parolanızı mı unuttunuz?"
+    }
+  },
+  "registerPage": {
+    "form": {
+      "username": {
+        "label": "Kullanıcı adı",
+        "required": "Kullanıcı adı gerekli",
+        "alphaNum": "Kullanıcı adı yalnızca harf ve rakam içerebilir",
+        "minLength": "Kullanıcı adı en az {minLength} harfe sahip olmalıdır.",
+        "maxLength": "Kullanıcı adı çok uzun. Maksimum {maxLength} harf içerebilir."
+      },
+      "emailAddress": {
+        "label": "E-posta adresi",
+        "required": "E-posta adresi gerekli",
+        "email": "Bu geçerli bir email adresi değildir",
+        "maxLength": "E-posta adresi çok uzun. Maksimum {maxLength} harf içerebilir."
+      },
+      "firstName": {
+        "label": "İsim",
+        "required": "İlk ad gerekli",
+        "alpha": "Ad yalnızca harf içerebilir",
+        "minLength": "Ad en az {minLength} harf içermelidir.",
+        "maxLength": "Adı çok uzun. Maksimum {maxLength} harf içerebilir."
+      },
+      "lastName": {
+        "label": "Soyadı",
+        "required": "Soyadı gerekli",
+        "alpha": "Soyadı yalnızca harf içerebilir",
+        "minLength": "Soyadı en az {minLength} harf içermelidir.",
+        "maxLength": "Soyadı çok uzun. Maksimum {maxLength} harf içerebilir."
+      },
+      "password": {
+        "label": "Parola",
+        "required": "Şifre gereklidir",
+        "minLength": "Şifre çok kısa. En az {minLength} harf içerebilir.",
+        "maxLength": "Şifre çok uzun. Maksimum {maxLength} harf içerebilir."
+      },
+      "submit": "Hesap oluştur",
+      "terms": {
+        "accept": "“Hesap oluştur” u tıklayarak {termsOfService} ve {privacyPolicy} şartlarımızı kabul etmiş olursunuz. ",
+        "termsOfService": "kullanım Şartları",
+        "privacyPolicy": "Gizlilik Politikası"
+      },
+      "alreadyHaveAccount": "Zaten hesabınız var mı?",
+      "signIn": "oturum aç"
+    }
+  },
+  "homePage": {
+    "personalBoards": "Kişisel Panolar",
+    "createNewBoard": "Yeni Pano Oluştur",
+    "createNewTeam": "Yeni Takım Oluştur"
+  },
+  "pageFooter": {
+    "about": "Hakkında",
+    "termOfService": "kullanım Şartları",
+    "privacyPolicy": "Gizlilik Politikası"
+  },
+  "error": {
+    "request": {
+      "bad": "Geçersiz istek",
+      "notAuthorized": "İstek yetkilendirilmedi.",
+      "forbidden": "İstek yasaklandı.",
+      "notFound": "İstek başarısız oldu. İstek uç noktası sunucuda bulunamadı.",
+      "unknownServerError": "Sunucu tarafında bir hata var. Lütfen daha sonra tekrar deneyiniz.",
+      "failed": "İstek başarısız oldu. Lütfen daha sonra tekrar deneyiniz.",
+      "noResponse": "İstek başarısız oldu. Sunucudan yanıt yok."
+    }
+  }
+}
