@@ -1,17 +1,7 @@
 <template>
   <footer class="footer">
     <span class="copyright">&copy; 2020 ATMan</span>
-    <ul class="footer-links list-inline float-right">
-      <li class="list-inline-item">
-        <a href="#">{{ $t('pageFooter.about') }}</a>
-      </li>
-      <li class="list-inline-item">
-        <a href="#">{{ $t('pageFooter.termOfService') }}</a>
-      </li>
-      <li class="list-inline-item">
-        <a href="#">{{ $t('pageFooter.privacyPolicy') }}</a>
-      </li>
-    </ul>
+    <ul class="footer-links list-inline float-right"></ul>
   </footer>
 </template>
 

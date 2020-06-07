@@ -163,9 +163,7 @@
           </div>
           <div class="card-controls">
             <h5>Add to Card</h5>
-            <div class="control" :disabled="true">
-              <font-awesome-icon icon="user" class="icon" di /> Members
-            </div>
+
             <div class="control">
               <uploader
                 id="cardAttachment"
@@ -177,10 +175,6 @@
                 @failed="onAttachmentUploadFailed"
                 @uploaded="onAttachmentUploaded"
               />
-            </div>
-            <h5 class="actions">Actions</h5>
-            <div class="control">
-              <font-awesome-icon icon="archive" class="icon" /> Archive
             </div>
           </div>
         </div>

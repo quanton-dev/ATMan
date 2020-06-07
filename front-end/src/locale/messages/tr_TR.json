@@ -65,7 +65,7 @@
       },
       "submit": "Hesap oluştur",
       "terms": {
-        "accept": "“Hesap oluştur” u tıklayarak {termsOfService} ve {privacyPolicy} şartlarımızı kabul etmiş olursunuz. ",
+        "accept": "“Hesap oluştur”'a tıklayarak {termsOfService} ve {privacyPolicy} şartlarımızı kabul etmiş olursunuz. ",
         "termsOfService": "kullanım Şartları",
         "privacyPolicy": "Gizlilik Politikası"
       },

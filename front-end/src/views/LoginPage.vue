@@ -49,11 +49,11 @@
                 $t('loginPage.form.signUpHere')
               }}</router-link>
             </p>
-            <p>
-              <router-link to="#">{{
-                $t('loginPage.form.forgotPassword')
-              }}</router-link>
-            </p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
           </div>
         </form>
       </div>
